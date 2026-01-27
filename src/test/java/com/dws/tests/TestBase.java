@@ -2,11 +2,13 @@ package com.dws.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import java.time.Duration;
+import java.util.List;
 
 public class TestBase {
 
@@ -47,4 +49,32 @@ public class TestBase {
         return email;
     }
 
+    public boolean isEmailInHeaderPresent() {
+        return isElementPresent(By.cssSelector(".header [href='/customer/info']"));
+    }
+
+    public void clickOnRegisterButton() {
+        click(By.id("register-button"));
+    }
+
+    public void fillRegisterForm(String name, String lastname, String email, String password) {
+        type(By.id("FirstName"), name);
+        type(By.id("LastName"), lastname);
+        type(By.id("Email"), email);
+        type(By.id("Password"), password);
+        type(By.id("ConfirmPassword"), password);
+    }
+
+    public void clickOnRegisterLink() {
+        click(By.cssSelector("[href='/register']"));
+    }
+
+    public boolean verifyByName(String text) {
+        List<WebElement> contacts = driver.findElements(By.cssSelector(".product-name"));
+        for (WebElement element: contacts) {
+            if (element.getText().contains(text))
+                return true;
+        }
+        return false;
+    }
 }
