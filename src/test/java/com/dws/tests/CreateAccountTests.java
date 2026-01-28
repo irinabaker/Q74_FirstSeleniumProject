@@ -7,10 +7,10 @@ public class CreateAccountTests extends TestBase{
 
     @Test
     public void newUserRegisterPositiveTest() {
-        clickOnRegisterLink();
-        fillRegisterForm("Karl", "Adam", newEmail(), "Karl1234");
-        clickOnRegisterButton();
-        Assert.assertTrue(isEmailInHeaderPresent());
+        app.getUser().clickOnRegisterLink();
+        app.getUser().fillRegisterForm("Karl", "Adam", app.getUser().newEmail(), "Karl1234");
+        app.getUser().clickOnRegisterButton();
+        Assert.assertTrue(app.getUser().isEmailInHeaderPresent());
     }
 
 }

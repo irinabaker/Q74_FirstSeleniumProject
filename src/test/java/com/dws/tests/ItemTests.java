@@ -1,6 +1,5 @@
 package com.dws.tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,50 +9,22 @@ public class ItemTests extends TestBase{
 
     @BeforeMethod
     public void precondition() {
-        clickOnLoginLink();
-        fillLoginForm("karl@gm.com","Karl1234$");
-        clickOnLoginButton();
-    }
-
-    public void clickOnLoginButton() {
-        click(By.cssSelector(".login-button"));
-    }
-
-    public void fillLoginForm(String email, String password) {
-        type(By.id("Email"),email);
-        type(By.id("Password"),password);
-    }
-
-    public void clickOnLoginLink() {
-        click(By.cssSelector("[href='/login']"));
+        app.getUser().clickOnLoginLink();
+        app.getUser().fillLoginForm("karl@gm.com","Karl1234$");
+        app.getUser().clickOnLoginButton();
     }
 
     @Test
     public void addItemToCartTest() {
-        String name = itemName("3");
-        clickOnItemInList("3");
-        clickOnShoppingCartLink();
-        Assert.assertTrue(verifyByName(name));
+        String name = app.getItem().itemName("3");
+        app.getItem().clickOnItemInList("3");
+        app.getItem().clickOnShoppingCartLink();
+        Assert.assertTrue(app.getItem().verifyByName(name));
     }
 
     @AfterMethod
     public void postCondition() {
-        removeItemFromCart();
+        app.getItem().removeItemFromCart();
     }
 
-    public void removeItemFromCart() {
-
-    }
-
-    public String itemName(String itemNameNumber) {
-        return driver.findElement(By.cssSelector(".item-box:nth-child(" + itemNameNumber + ") h2>a")).getText();
-    }
-
-    public void clickOnShoppingCartLink() {
-        click(By.id("topcartlink"));
-    }
-
-    public void clickOnItemInList(String itemNumber) {
-        click(By.cssSelector(".item-box:nth-child(" + itemNumber + ") .buttons"));
-    }
 }
